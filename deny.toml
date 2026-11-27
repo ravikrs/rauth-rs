@@ -23,9 +23,6 @@ allow = [
     "Zlib",
 ]
 
-[licenses.private]
-ignore = true
-
 [bans]
 multiple-versions = "warn"
 wildcards = "deny"
