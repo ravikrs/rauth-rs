@@ -71,6 +71,8 @@ the references into gitignored `reference/src/`; cite paths relative to it.
 
 - Repo is `rauth-rs`; workspace crates are `rauth-*`, laid out per ADR-001 D4
   (`rauth-<ctx>-domain`, `-postgres`, `-memory`, `-http`, `-api`; binaries under `bins/`).
+- Every crate manifest sets `license.workspace = true`; `cargo deny check licenses` fails a crate
+  with no licence declared. The licence itself is stated in `README.md`.
 - Every claim about a reference cites a file path, and says whether it was verified, inferred or
   recalled.
 - PRs opened by an agent carry the `agent` label, so factory work can be told from the author's.
