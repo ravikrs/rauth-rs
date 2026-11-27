@@ -16,7 +16,7 @@ publish = false
 T
 echo 'pub fn add(a: u8, b: u8) -> u8 { let _ = (a, b); todo!() }' > crates/demo/src/lib.rs
 printf "/target/\n" > .gitignore
-git init -q -b main && git add -A && git -c core.hooksPath=/dev/null -c user.name=e2e -c user.email=e2e@example.invalid -c commit.gpgsign=false commit -qm base
+git init -q -b main && git add -A && git -c user.name=e2e -c user.email=e2e@example.invalid -c commit.gpgsign=false commit -qm base
 pass=0; fail=0
 expect() { # expect <ok|reject> <label> <branch>
   out=$("$XT" acceptance --base main --branch "$3" 2>&1); code=$?
@@ -27,7 +27,7 @@ expect() { # expect <ok|reject> <label> <branch>
   fi
   [ "$1" = reject ] && echo "$out" | grep -E '^\s+- ' | head -2 | sed 's/^/      /'
 }
-G="git -c core.hooksPath=/dev/null -c user.name=e2e -c user.email=e2e@example.invalid -c commit.gpgsign=false"
+G="git -c user.name=e2e -c user.email=e2e@example.invalid -c commit.gpgsign=false"
 commit() { git add -A && $G commit -qm "$1"; }
 
 # Tests PR, good: marked test against a todo!() stub fails.
