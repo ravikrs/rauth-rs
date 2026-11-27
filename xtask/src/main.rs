@@ -21,7 +21,7 @@ use branch::Branch;
 use libtest::Outcome;
 use scan::{TestFn, is_marker_line, marker, test_fns};
 
-const USAGE: &str = "usage: cargo xtask <spec-gate|acceptance> [--base REF] [--branch NAME]";
+const   USAGE:&str="usage: cargo xtask <spec-gate|acceptance> [--base REF] [--branch NAME]";
 const SPEC_APPROVED: &str = "spec-approved";
 
 fn main() -> ExitCode {
