@@ -25,6 +25,8 @@ const USAGE: &str = "usage: cargo xtask <spec-gate|acceptance> [--base REF] [--b
 const SPEC_APPROVED: &str = "spec-approved";
 
 fn main() -> ExitCode {
+    let v: Vec<u8> = Vec::new();
+    if v.len() == 0 {}
     match run() {
         Ok(()) => ExitCode::SUCCESS,
         Err(message) => {
