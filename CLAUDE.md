@@ -11,14 +11,33 @@ spec and merges each PR; the OpenID conformance suite is the objective finish li
 
 ## Status
 
-Pre-code: no Cargo workspace, no build or test commands yet. **Read
-`docs/adr-001-architecture.md` first** — contexts, deployables, scaling model, crate layout. When the
-workspace lands, add its build/lint/test commands here. Work follows the ADR-002 loop: four agent
-roles, acceptance tests frozen for the implementer, one branch and worktree per issue once branch
-protection is on.
+Cargo workspace with the factory tooling (`xtask/`); no product crates yet. **Read
+`docs/adr-001-architecture.md` first** (contexts, deployables, scaling model, crate layout), then
+`docs/adr-002-factory-loop.md` (how work moves).
 
-Layout: `docs/` (ADRs, served by `mkdocs.yml`, deployed to GitHub Pages), `reference/` (survey and
-clone script), `.github/workflows/` (`docs` builds and deploys the site, `gitleaks` scans history).
+Layout: `crates/` (product crates, `rauth-*`), `xtask/` (factory checks), `docs/` (ADRs, MkDocs,
+deployed to GitHub Pages), `reference/` (survey and clone script), `.claude/agents/` (the four
+roles), `.github/` (CI, docs deploy, spec issue form, PR template).
+
+## Commands
+
+Rust comes from `rust-toolchain.toml`; tools are `just`, `cargo-nextest`, `cargo-deny`, `gitleaks`
+and `mkdocs-material` (`requirements-docs.txt`).
+
+- `just check`: the whole merge gate, exactly as CI runs it. Run before every push.
+- `just fmt` / `just clippy` / `just test` / `just deny` / `just docs` / `just secrets`: one gate step.
+- `cargo nextest run -p <crate>`: one crate's tests.
+- `just factory`: spec gate and acceptance checks for the current branch against `origin/main`
+  (override with `BASE=<ref>`); they read committed state, so commit first.
+- `just test-factory`: the end-to-end proof that the acceptance checks accept and reject correctly.
+
+## How work moves (ADR-002)
+
+`main` only changes through PRs that pass `check`. Per issue: `spec-writer` drafts it, the author
+labels it `spec-approved`, `test-writer` opens `<N>-acceptance` with failing tests marked
+`#[ignore = "acceptance: #N"]`, `implementer` opens `<N>-<slug>` in its own worktree and may only
+remove those markers under `tests/acceptance/`, `reviewer` comments, the author merges. Agent PRs
+carry the `agent` label. Agents never merge or push to `main`.
 
 ## Work tracking
 

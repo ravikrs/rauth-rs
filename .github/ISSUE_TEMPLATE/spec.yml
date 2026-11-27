@@ -1,0 +1,45 @@
+name: Spec
+description: A unit of work for the factory. Tests and code start only once it is labelled spec-approved (ADR-002 D1).
+labels: []
+body:
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What the change does, in one paragraph.
+    validations:
+      required: true
+  - type: textarea
+    id: normative-basis
+    attributes:
+      label: Normative basis
+      description: Each RFC/OIDC requirement implemented, quoted with its section number and MUST/SHOULD keyword. Quote, do not paraphrase.
+      placeholder: |
+        RFC 6749 §4.4.2: "The client MUST authenticate with the authorization server …"
+    validations:
+      required: true
+  - type: textarea
+    id: interface
+    attributes:
+      label: Interface
+      description: Public types and signatures the acceptance tests call. The test writer stubs these with todo!() bodies.
+      render: rust
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: Numbered, one observable check each, traced to a quoted requirement or an ADR decision.
+      placeholder: |
+        AC1 (RFC 6749 §4.4.2): Given a client without credentials, when it requests a token, then the response is 401 invalid_client.
+    validations:
+      required: true
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of scope
+      description: What a reader might expect that this issue does not do.
+  - type: textarea
+    id: adr-links
+    attributes:
+      label: ADR links
+      description: Decisions this depends on or would change. A change to an ADR needs a decision issue first.
